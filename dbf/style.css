@@ -1,0 +1,54 @@
+/**
+    style.css - Stylesheet for database creation output.
+    Contributors:
+        James West - westj4@csp.edu
+        Dylan Johnson - johnsond47@csp.edu
+    Course: CSC235 Server-Side Development
+    Assignment: Group Project
+    Date: 4/1/2023
+ */
+
+body {
+    font-family: sans-serif;
+    margin: 20px;
+}
+
+h1, #bar {
+    border: 1px;
+    padding: 5px;
+    background: lightslategray;
+    color: aliceblue;
+    text-align: center;
+    font-size: 24px;
+}
+
+table {
+    margin-top: 5px;
+    border: 1px solid slategray;
+}
+
+td, th {
+    padding: 10px;
+}
+
+th {
+    background: darkgray;
+    color: aliceblue;
+}
+
+tr:nth-child(even) {
+    background: lightslategray;
+}
+
+p {
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+#table_details {
+    font-size: 16px;
+}
+
+#bar {
+    margin-bottom: 10px;
+}

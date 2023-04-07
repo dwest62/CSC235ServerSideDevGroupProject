@@ -1,0 +1,136 @@
+{
+  "destination": [
+    {
+      "destination_id": 1,
+      "destination_name": "Mall of America",
+      "destination_desc": "Mall of America is a large shopping mall located in Bloomington, Minnesota. It is one of the largest malls in the world, with over 5.6 million square feet of retail space and more than 500 stores. The mall also features a variety of entertainment options, including an indoor amusement park, an aquarium, a miniature golf course, and a cinema. In addition, there are more than 50 restaurants within the mall, as well as numerous hotels in the surrounding area. It is a popular tourist attraction and shopping destination for both locals and visitors to the MSP area!\n",
+      "website": "https://www.mallofamerica.com/#",
+      "image_url": "",
+      "zip": "55425",
+      "line_1": "60 E Broadway",
+      "line_2": "",
+      "city": "Bloomington"
+    },
+    {
+      "destination_id": 2,
+      "destination_name": "Pipestone National Monument",
+      "destination_desc": "Pipestone National Monument is a United States National Monument located in southwestern Minnesota. The site is home to a sacred quarry where Native Americans have been quarrying the soft, reddish-brown stone known as “pipestone” for centuries. The pipestone is used to make ceremonial pipes that are an important part of many Native American cultures. \n\nVisitors to Pipestone National Monument can take a self-guided tour of the quarry and learn about the history and significance of the site through exhibits and interpretive programs. The monument also includes a visitor center, gift shop, and hiking trails that wind through the surrounding prairie landscape.\n\nIn addition to its cultural and historical significance, Pipestone National Monument is also home to a diverse range of plant and animal life, including tallgrass prairie, oak savanna, and wetlands The park offers opportunities for birdwatching, wildlife viewing, and photography. \n\nOverall Pipestone National Monument is a fascinating destination for anyone interested in Native American culture, history, and the natural beauty of the American Midwest.",
+      "website": "https://www.nps.gov/pipe/index.htm",
+      "image_url": "",
+      "zip": "56165",
+      "line_1": "36 Reservation Ave",
+      "line_2": "",
+      "city": "Pipestone"
+    },
+    {
+      "destination_id": 3,
+      "destination_name": "Minnesota State Fair",
+      "destination_desc": "The Minnesota State Fair is an annual event held in late August and early September in the city of Falcon Heights, near Saint Paul. It is one of the largest state fairs in the United States and attracts over 2 million visitors each year.\n\nThe fairgrounds cover over 322 acres and include a wide variety of attractions, including rides and games, concerts and performances, agricultural exhibits, art displays, and food stands. In fact, the food is a major draw for many visitors, with over 300 food vendors offering everything from classic fair foods like corn dogs and cotton candy to unique Minnesota specialties like cheese curds and deep-fried walleye on a stick.\n\nIn addition to the food and attractions, the Minnesota State Fair also hosts a variety of competitions, including livestock shows, craft contests, and talent competitions. Visitors can also enjoy live music, comedy shows, and other entertainment throughout the fairgrounds.\n\nOverall, the Minnesota State Fair is a fun and festive event that celebrates the state\\'s agricultural heritage and offers something for everyone to enjoy.",
+      "website": "https://www.mnstatefair.org/",
+      "image_url": "",
+      "zip": "55108",
+      "line_1": "265 Snelling Ave North",
+      "line_2": "",
+      "city": "St. Paul"
+    },
+    {
+      "destination_id": 4,
+      "destination_name": "US Bank Stadium",
+      "destination_desc": "US Bank Stadium is a multi-purpose stadium located in downtown Minneapolis, Minnesota. It is home to the Minnesota Vikings of the National Football League (NFL) and also hosts other sporting and entertainment events throughout the year.\n\nThe stadium opened in 2016 and features a striking design with a transparent roof that allows natural light to enter the stadium. The seating capacity is 66,655 for most events, with the ability to expand to 73,000 for major events like the Super Bowl.\n\nIn addition to football games, US Bank Stadium has hosted a variety of other events, including concerts, high school and college sports, monster truck shows, and the X Games. The stadium also includes a number of amenities for fans, including restaurants, bars, and lounges, as well as a Vikings team store.\n\nOverall, US Bank Stadium is a state-of-the-art facility that offers a world-class venue for sports and entertainment events in the heart of downtown Minneapolis.",
+      "website": "https://www.usbankstadium.com/",
+      "image_url": "",
+      "zip": "55415",
+      "line_1": "401 Chicago Ave",
+      "line_2": "",
+      "city": "Minneapolis"
+    }
+  ],
+  "tag_type": [
+    {
+      "tag_type_id": 1,
+      "tag_type_name": "Activity"
+    },
+    {
+      "tag_type_id": 2,
+      "tag_type_name": "Season"
+    },
+    {
+      "tag_type_id": 3,
+      "tag_type_name": "Indoor / Outdoor"
+    }
+  ],
+  "tag": [
+    {
+      "tag_id": 1,
+      "tag_type": 2,
+      "tag_name": "summer"
+    },
+    {
+      "tag_id": 2,
+      "tag_type": 2,
+      "tag_name": "winter"
+    },
+    {
+      "tag_id": 3,
+      "tag_type": 2,
+      "tag_name": "fall"
+    },
+    {
+      "tag_id": 4,
+      "tag_type": 2,
+      "tag_name": "spring"
+    },
+    {
+      "tag_id": 5,
+      "tag_type": 3,
+      "tag_name": "indoor"
+    },
+    {
+      "tag_id": 6,
+      "tag_type": 3,
+      "tag_name": "outdoor"
+    },
+    {
+      "tag_id": 7,
+      "tag_type": 1,
+      "tag_name": "shopping"
+    },
+    {
+      "tag_id": 8,
+      "tag_type": 1,
+      "tag_name": "hiking"
+    },
+    {
+      "tag_id": 9,
+      "tag_type": 1,
+      "tag_name": "seasonal event"
+    }
+  ],
+  "destination_tag": [
+    {
+      "destination_tag_id": 1,
+      "destination": 1,
+      "tag": 7
+    },
+    {
+      "destination_tag_id": 2,
+      "destination": 2,
+      "tag": 8
+    },
+    {
+      "destination_tag_id": 3,
+      "destination": 3,
+      "tag": 9
+    },
+    {
+      "destination_tag_id": 4,
+      "destination": 3,
+      "tag": 6
+    },
+    {
+      "destination_tag_id": 5,
+      "destination": 4,
+      "tag": 5
+    }
+  ]
+}
