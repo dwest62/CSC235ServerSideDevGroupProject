@@ -2,10 +2,15 @@
 <?php
     $output = shell_exec('git checkout master 2>&1');
     echo "$output<br/>";
-    $output = shell_exec('git pull');
+    $output = shell_exec('git pull 2>&1');
     echo "$output<br/>";
-    $output = shell_exec('git checkout prod');
+    $output = shell_exec('git checkout prod 2>&1');
     echo "$output<br/>";
-    $output = shell_exec('git merge master');
+    $output = shell_exec('git merge master 2>&1');
     echo "$output<br/>";
+<<<<<<< HEAD
+=======
+    $output = shell_exec('git push 2>&1');
+    echo "$output<br/>";
+>>>>>>> master
 ?>
