@@ -1,13 +1,13 @@
 
 <?php
     $output = shell_exec('git checkout master');
-    echo "$output";
+    echo "$output<br/>";
     $output = shell_exec('git pull');
-    echo "$output";
+    echo "$output<br/>";
     $output = shell_exec('git checkout prod');
-    echo "$output";
+    echo "$output<br/>";
     $output = shell_exec('git merge master');
-    echo "$output";
+    echo "$output<br/>";
     $output = shell_exec('git push');
-    echo "$output";
+    echo "$output<br/>";
 ?>
