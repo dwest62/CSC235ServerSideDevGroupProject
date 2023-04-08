@@ -8,8 +8,6 @@
     echo "$output<br/>";
     $output = shell_exec('git merge master 2>&1');
     echo "$output<br/>";
-<<<<<<< HEAD
-=======
     $output = shell_exec('git push 2>&1');
     echo "$output<br/>";
 >>>>>>> master
