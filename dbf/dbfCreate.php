@@ -12,6 +12,7 @@
         Course: CSC235 Server-Side Development
         Assignment: Group Project
         Date: 4/1/2023
+        Last modified: 4/7/2023
     -->
 
     <?PHP
