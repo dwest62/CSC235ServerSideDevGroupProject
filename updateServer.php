@@ -1,6 +1,5 @@
 
 <?php
-    echo "yep";
     $output = shell_exec('git checkout master 2>&1');
     echo "$output<br/>";
     $output = shell_exec('git pull 2>&1');
