@@ -1,4 +1,5 @@
 <?php
+// made
     function addDataToTables(): bool
     {
         global $conn;
