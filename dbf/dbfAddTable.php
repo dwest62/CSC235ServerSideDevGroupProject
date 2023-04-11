@@ -43,7 +43,7 @@ function addTagTable(): bool
                     tag_type int,
                     tag_name varchar(30) NOT NULL,
                     PRIMARY KEY (tag_id),
-                    FOREIGN KEY (tag_type) REFERENCES tag_type(tag_type_id)
+                    FOREIGN KEY (tag_type) REFERENCES tag_type(tag_type_id) ON DELETE CASCADE ON UPDATE CASCADE
         )";
     return $conn->query($sql);
 }
@@ -74,8 +74,8 @@ function addDestinationTagTable(): bool
                     destination int NOT NULL,
                     tag int NOT NULL,
                     PRIMARY KEY (destination_tag_id),
-                    FOREIGN KEY (destination) REFERENCES destination (destination_id),
-                    FOREIGN KEY (tag) REFERENCES tag (tag_id)
+                    FOREIGN KEY (destination) REFERENCES destination (destination_id) ON DELETE CASCADE ON UPDATE CASCADE,
+                    FOREIGN KEY (tag) REFERENCES tag (tag_id) ON DELETE CASCADE ON UPDATE CASCADE
         )";
     return $conn->query($sql);
 }
