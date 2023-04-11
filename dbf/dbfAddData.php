@@ -1,6 +1,7 @@
 <?php
     function addDataToTables(): bool
     {
+        // last test
         global $conn;
         $starterData = json_decode(file_get_contents("starterData.json"), true);
 
