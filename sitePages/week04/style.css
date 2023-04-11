@@ -64,6 +64,12 @@ fieldset {
    border-radius: 10px;
 }
 
+#txtDescription {
+   width: 75%;
+   word-wrap: break-word;
+   resize: both;
+}
+
 /* Table Styles */
 table {
    width:  100%;
