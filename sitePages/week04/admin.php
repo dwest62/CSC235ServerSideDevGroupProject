@@ -95,7 +95,7 @@
                 // First name and last name are selected
                 else {
                     $isSuccessful = false;
-                    /*
+                    
                     $descriptionText = mysqli_real_escape_string($conn, $_POST['txtDescription']);
                     
                     $sql = "UPDATE destination SET destination_name = '" . $_POST['txtName'] . "', "
@@ -106,13 +106,10 @@
                                     . " line_2  = '" . $_POST['txtLineTwo'] . "', "
                                     . " city  = '" . $_POST['txtCity'] . "', "
                                     . " website = '" . $_POST['txtWebsite'] . "' 
-                                    WHERE destination_id = " . $destination['id'];
+                                    WHERE destination_id = " . $_POST['destID'];
                     $result = $conn->query($sql);
-                    */
-
-                    foreach ($destination as $element) {
-                        echo $element . '<br>';
-                    }
+                    
+                    /*
                     $name = mysqli_real_escape_string($conn, $_POST['txtName']);
                     $description = mysqli_real_escape_string($conn, $_POST['txtDescription']);
                     $img = mysqli_real_escape_string($conn, $_POST['txtImg']);
@@ -121,6 +118,7 @@
                     $line2 = mysqli_real_escape_string($conn, $_POST['txtLineTwo']);
                     $city = mysqli_real_escape_string($conn, $_POST['txtCity']);
                     $website = mysqli_real_escape_string($conn, $_POST['txtWebsite']);
+                    $destID = mysqli_real_escape_string($conn, $_POST['destID']);
 
                     // Build the SQL query using the escaped input
                     $sql = "UPDATE destination SET 
@@ -132,11 +130,12 @@
                             line_2  = '$line2', 
                             city  = '$city', 
                             website = '$website' 
-                            WHERE destination_id = " . $destination['id'];
+                            WHERE destination_id = '$destID'";
 
                     // Execute the SQL query
+                    echo $sql;
                     mysqli_query($conn, $sql);
-
+                    */
                     if (!$result) {
                         displayMessage("Error: " . $conn->error, "red");
                     } else {
@@ -225,7 +224,7 @@
                                 value="<?php echo $destination['description'] ?>" size="<?php echo $destination['len']?>"
                                 maxlength="<?php echo 5000 ?>" />
                     </div>
-                    <input type="hidden" name="id" id="id" value="<?php $destination['id']?>">
+                    <input type="hidden" name="destID" id="destID" value="<?php echo $destination['id']?>">
 
                 </fieldset>
 
