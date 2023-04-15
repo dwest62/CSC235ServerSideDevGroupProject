@@ -106,19 +106,14 @@
 main();
 ?>
 <h1>Tables</h1>
-<p>
-    <?PHP
-        global $conn;
-        echo "<h3>Destination Table</h3>";
-        displayTable("SELECT * FROM destination", $conn);
-        echo "<h3>Tag Type Table</h3>";
-        displayTable("SELECT * FROM tag_type", $conn);
-        echo "<h3>Tag Table</h3>";
-        displayTable("SELECT * FROM tag", $conn);
-        echo "<h3>Destination Tag Table</h3>";
-        displayTable("SELECT * FROM destination_tag", $conn);
-        $conn->close();
-    ?>
-</p>
+<div>
+    <h3>Destination Table</h3>
+    <?= displayTable("SELECT * FROM destination", $conn)?>
+    <h3>Tag Type Table</h3>
+    <?= displayTable("SELECT * FROM tag_type", $conn)?>
+    <h3>Destination Tag Table</h3>
+    <?=displayTable("SELECT * FROM destination_tag", $conn)?>
+    <?php $conn->close() ?>
+</div>
 </body>
 </html>
