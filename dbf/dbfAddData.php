@@ -1,7 +1,6 @@
 <?php
     function addDataToTables(): bool
     {
-        // last test
         global $conn;
         $starterData = json_decode(file_get_contents("starterData.json"), true);
 
@@ -29,8 +28,8 @@
             echo "&emsp;&emsp;" . $entry["destination_name"] . " added!" . "<br />";
         }
 
-        // Tag type data
-        echo "&emsp;Tag Type Table:<br />";
+        // TagTable type data
+        echo "&emsp;TagTable Type Table:<br />";
         foreach ($starterData['tag_type'] as $entry) {
             $sql =
                 "INSERT INTO tag_type
@@ -46,8 +45,8 @@
             echo "&emsp;&emsp;" . $entry["tag_type_name"] . " added!" . "<br />";
         }
 
-        // Tag data
-        echo "&emsp;Tag Table:<br />";
+        // TagTable data
+        echo "&emsp;TagTable Table:<br />";
         foreach ($starterData['tag'] as $entry) {
             $sql =
                 "INSERT INTO tag (tag_id, tag_type, tag_name)
@@ -64,8 +63,8 @@
             echo "&emsp;&emsp;" . $entry["tag_name"] . " added!" . "<br />";
         }
 
-    // Tag Destination data
-    echo "&emsp;Destination Tag Table:<br />";
+    // TagTable Destination data
+    echo "&emsp;Destination TagTable Table:<br />";
     foreach ($starterData['destination_tag'] as $entry) {
         $sql =
             "INSERT INTO destination_tag
