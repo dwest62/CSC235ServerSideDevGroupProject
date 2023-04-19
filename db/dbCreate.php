@@ -25,8 +25,10 @@
         include_once "../../params.php";
         require_once "component/dbProcedure.php";
 
+        const DB_NAME = "dbTravelMinnesota";
+
         $startData = json_decode(file_get_contents("data.json", true), true);
-        $dbh = new DBHandler(SERVER, USER, PASSWORD, NULL);
+        $dbh = new DBHandler("localhost", "root", "mysql", NULL);
         $tables = [new DestinationTable(), new TagTypeTable(), new TagTable(), new DestinationTagTable()];
 
 

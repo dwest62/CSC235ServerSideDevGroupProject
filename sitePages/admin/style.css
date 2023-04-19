@@ -3,85 +3,90 @@
    Written: Current Date
    Revised:
 */
-body {
-   background: #EEE;
-   font-size:  16px;
-   font-family:optima, helvetica, arial, sans-serif;
-}
+/*body {*/
+/*   background: #EEE;*/
+/*   font-size:  16px;*/
+/*   font-family:optima, helvetica, arial, sans-serif;*/
+/*}*/
 
-#frame h1 {
-   color: #000080;
-   margin-bottom: 3%;
-}
+/*#frame h1 {*/
+/*   color: #000080;*/
+/*   margin-bottom: 3%;*/
+/*}*/
 
-h2 {
-   color: #000080;   
-   text-align: center;
-   border-top: white 1px solid;
-   border-bottom: white 1px solid;
-}
+/*h2 {*/
+/*   color: #000080;   */
+/*   text-align: center;*/
+/*   border-top: white 1px solid;*/
+/*   border-bottom: white 1px solid;*/
+/*}*/
 
-#frame {
-   max-width:  1200px;
-   margin: auto;
-   border: 1px solid #000080;
-   padding: 10px;
-}
+/*#frame {*/
+/*   max-width:  1200px;*/
+/*   margin: auto;*/
+/*   border: 1px solid #000080;*/
+/*   padding: 10px;*/
+/*}*/
 
-/* Form Styles */
-.topLabel {
-   float: left;
-   display: inline-block;
-   margin: 0px 20px 0 0px; 
-}
+/*!* Form Styles *!*/
+/*.topLabel {*/
+/*   float: left;*/
+/*   display: inline-block;*/
+/*   margin: 0px 20px 0 0px; */
+/*}*/
 
-.topLabel label {
-   display:block;  /* position labels above text boxes */
-}
+/*.topLabel label {*/
+/*   display:block;  !* position labels above text boxes *!*/
+/*}*/
 
-input[type=text] {
-   font-size:  1em;
-   padding:5px;
-   margin: 0px;
-   display:inline;
-}
+/*input[type=text] {*/
+/*   font-size:  1em;*/
+/*   padding:5px;*/
+/*   margin: 0px;*/
+/*   display:inline;*/
+/*}*/
 
-select {
-   font-size:  1.2em;   
-}
+/*select {*/
+/*   font-size:  1.2em;   */
+/*}*/
 
-button {
-   font-size:  1em;
-   padding:10px;
-   border-radius: 10px;
-   background: white;
-   margin: 5px 5px;
-}
+/*button {*/
+/*   font-size:  1em;*/
+/*   padding:10px;*/
+/*   border-radius: 10px;*/
+/*   background: white;*/
+/*   margin: 5px 5px;*/
+/*}*/
 
-fieldset {
-   color:  #000080;
-   border: 1px solid #DDD;
-   border-radius: 10px;
-}
+/*fieldset {*/
+/*   color:  #000080;*/
+/*   border: 1px solid #DDD;*/
+/*   border-radius: 10px;*/
+/*}*/
 
-#txtDescription {
-   width: 75%;
-   word-wrap: break-word;
-   resize: both;
-}
+/*#txtDescription {*/
+/*   width: 75%;*/
+/*   word-wrap: break-word;*/
+/*   resize: both;*/
+/*}*/
 
-/* Table Styles */
-table {
-   width:  100%;
-}
+/*!* Table Styles *!*/
+/*table {*/
+/*   width:  100%;*/
+/*}*/
 
-td, th {
-   padding:5px 20px;
-   background: white;
-   color:  black;
-}
+/*td, th {*/
+/*   padding:5px 20px;*/
+/*   background: white;*/
+/*   color:  black;*/
+/*}*/
 
-th {
-   background: #EEE;
-   color:  #000080;
+/*th {*/
+/*   background: #EEE;*/
+/*   color:  #000080;*/
+/*}*/
+
+#lstTag {
+    display: block;
+    height: fit-content;
 }

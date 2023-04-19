@@ -93,6 +93,16 @@ class DBHandler
         return $this->conn;
     }
 
+    public function resetConn(): mysqli
+    {
+        if($this->isConnected())
+        {
+            $this->conn->close();
+        }
+        $this->openConnection();
+        return $this->conn;
+    }
+
     public function displayQuerySuccess($result): string
     {
         return $result ? "Success" : "Failed: {$this->conn->error}";
