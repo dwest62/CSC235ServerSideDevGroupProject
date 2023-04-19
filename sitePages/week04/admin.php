@@ -11,19 +11,19 @@
     <head>
     <meta charset="utf-8">
     <title>Administration Page</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="../admin/style.css">
 
     <?PHP
         // Set up connection constants
         // Using default username and password for AMPPS  
-        require_once "../../dbf/dbfLib.php";
+        require_once "../../db/dbfLib.php";
         require_once "../../../params.php";
 
             
 
         // Global connection object
         $conn = createConnection(SERVER, USER, PASSWORD);
-        $conn->select_db(DATABASE_NAME);
+        $conn->select_db(DB_NAME);
 
 
         // Did the user select a runner from the list?
@@ -165,7 +165,7 @@
                 <select name="lstDestination" id="lstDestination" onChange="this.form.submit();">
                     <option value="new">Select a name</option>
                     <?php
-                        // Loop through the runner table to build the <option> list
+                        // Loop through the runner dbTable to build the <option> list
                         $sql = "SELECT destination_id as 'id', destination_name as 'name'
                                 FROM destination ORDER BY destination_name";
                         $result = $conn->query($sql);
@@ -185,7 +185,6 @@
                     <div class="topLabel">
                         <label for="txtName">Name</label>
                         <input type="text" name="txtName"   id="txtName" value="<?php echo $destination['name'] ?>" />
-                        
                     </div>
 
                     <div class="topLabel">
