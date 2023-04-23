@@ -4,7 +4,8 @@
     <meta charset="utf-8">
     <title>Administration Page</title>
     <link rel="stylesheet" type="text/css" href="style.css">
-<?php
+
+    <?PHP
     require_once "../../../params.php";
     require_once "../../db/component/Table.php";
     require_once "../../db/component/DestinationTable.php";
@@ -13,19 +14,23 @@
     require_once "../../db/component/DestinationTagTable.php";
     require_once "../../db/component/Tag.php";
     require_once "../../db/component/TagTable.php";
+    require_once "../../db/component/TagTypeTable.php";
+    require_once "../../db/component/TagType.php";
 
     // Global connection object
-    $dbh = new DBHandler(SERVER, USER, PASSWORD, DB_NAME);
+    $dbh = new DBHandler(SERVER, USER, PASSWORD, "dbtravelminnesota");
 
+    // Initialize table objects
     $destinationTable = new DestinationTable();
     $destinationTagTable = new DestinationTagTable();
     $tagTable = new TagTable();
 
-
+    // Update to provide feedback on form operations
     $feedback = "";
+
+    // Handle form button submissions
     if (isset($_POST['btnSubmit'])) {
-        $submit = $_POST['btnSubmit'];
-        if (isset($submit['destination'])) {
+        if (isset($_POST['btnSubmit']['destination'])) {
             $currDestination = new Destination(
                 (int)$_POST['txtID'],
                 $_POST['txtName'],
@@ -37,186 +42,403 @@
                 $_POST['txtImg'],
                 $_POST['txtWebsite']
             );
-            switch ($submit['destination']) {
+            switch ($_POST['btnSubmit']['destination']) {
                 case "add":
                     $feedback = $destinationTable->add($dbh, $currDestination)
-                        ? "<p class='success'>Successfully added new destination: {$_POST['txtName']} </p>"
+                        ? "<p class='success'>Added new destination (or already exists): {$_POST['txtName']} </p>"
                         : "<p class='failed'>{$destinationTable->getErrMsg($dbh->getConn(), $currDestination->getName())}</p>";
                     break;
                 case "update":
                     $feedback = $destinationTable->update($dbh, $currDestination)
-                        ? "<p class='success'>Successfully updated destination: {$_POST['txtName']}</p>"
+                        ? "<p class='success'>Updated destination: {$_POST['txtName']}</p>"
                         : "<p class='failed'>{$destinationTable->getErrMsg($dbh->getConn(), $currDestination->getName())}</p>";
                     break;
                 case "delete":
                     $feedback = $destinationTable->delete($dbh, $currDestination)
-                        ? "<p class='success'>Successfully deleted destination: {$_POST['txtName']}"
+                        ? "<p class='success'>Deleted destination: {$_POST['txtName']}"
                         : "<p class='failed'>{$destinationTable->getErrMsg($dbh->getConn(), $currDestination->getName())}</p>";
             }
-        } elseif (isset($submit['tag'])) {
-            switch ($submit['tag']) {
+        } elseif (isset($_POST['btnSubmit']['destinationTag'])) {
+            switch ($_POST['btnSubmit']['destinationTag']) {
                 case "add":
-                    //TODO; implement add destination_tag entry
+                    if (isset($_POST['inactiveTags']) && count($_POST['inactiveTags']) > 0) {
+                        $feedback = DestinationTagTable::addTagsToDestination($dbh, $_POST["inactiveTags"], $_POST['lstDestination'])
+                            ? "<p class='success'>Added tags to destination"
+                            : "<p class='failed'>Failed to add tags to destination: {$dbh->getConn()->error}</p>";
+                    }
                     break;
                 case "remove":
-                    //TODO implement remove destination_tag entry
+                    if (isset($_POST['activeTags']) && count($_POST['activeTags']) > 0) {
+                        $feedback = DestinationTagTable::removeTagsFromDestination($dbh, $_POST["activeTags"], $_POST['lstDestination'])
+                            ? "<p class='success'>Removed tags destination"
+                            : "<p class='failed'>Failed to remove tags from destination: {$dbh->getConn()->error}</p>";
+                    }
+                    break;
+            }
+        } elseif (isset($_POST['btnSubmit']['tag'])) {
+            switch ($_POST['btnSubmit']['tag']) {
+                case "add":
+                    $feedback = TagTable::addTag($dbh, $_POST['txtTagName'], (int)$_POST['lstTagTagTypeId'])
+                        ? "<p class='success'>Added tag (or already exists)"
+                        : "<p class='failed'>Failed to add tag: {$dbh->getConn()->error}</p>";
+                    break;
+                case "update":
+                    $feedback = TagTable::updateTag($dbh, (int)$_POST['lstTag'], $_POST['txtTagName'], (int)$_POST['lstTagTagTypeId'],)
+                        ? "<p class='success'>Updated tag"
+                        : "<p class='failed'>Failed to update tag: {$dbh->getConn()->error}</p>";
+                    break;
+                case "delete":
+                    $feedback = TagTable::deleteTag($dbh, $_POST['lstTag'])
+                        ? "<p class='success'>Tag deleted"
+                        : "<p class='failed'>Failed to delete tag: {$dbh->getConn()->error}</p>";
+                    break;
+            }
+        } elseif (isset($_POST['btnSubmit']['tagType'])) {
+            switch ($_POST['btnSubmit']['tagType']) {
+                case "add":
+                    $feedback = TagTypeTable::addTagType($dbh, $_POST['txtTagTypeName'])
+                        ? "<p class='success'>Tag Type added (or already exists)"
+                        : "<p class='failed'>Failed to add tag type: {$dbh->getConn()->error}</p>";
+                    break;
+                case "update":
+                    $feedback = TagTypeTable::updateTagType($dbh, (int)$_POST['lstTagType'], $_POST['txtTagTypeName'])
+                        ? "<p class='success'>Tag Type added (or already exists)"
+                        : "<p class='failed'>Failed to add tag type: {$dbh->getConn()->error}</p>";
+                    break;
+                case "delete":
+                    $feedback = TagTypeTable::deleteTagType($dbh, (int)$_POST['lstTagType'])
+                        ? "<p class='success'>Tag Type deleted"
+                        : "<p class='failed'>Failed to delete tag type: {$dbh->getConn()->error}</p>";
                     break;
             }
         }
 
-
     }
+
+    // Set current destination to last selected or set to default if none selected
     $currDestination = (isset($_POST['lstDestination']) && !$_POST['lstDestination'] == '0')
         ? $destinationTable->getById($dbh, (int)$_POST['lstDestination'])
         : new Destination();
 
-    $options = $destinationTable->getOptions($dbh);
+    // Get all tags
+    $tags = TagTable::getAllTagsJoinTagTypeName($dbh);
 
-    $activeTagOptions = $destinationTagTable->getDestinationTagsJoinTagType($dbh, $currDestination);
-    $inactiveTagOptions = $destinationTagTable->getNotDestinationTagsJoinTagType($dbh, $currDestination);
+    // Get all tags grouped by tag type and by whether active on current destination
+    $tagOptions = TagTable::getTagsGroupByActiveGroupByTagType($tags, $currDestination->getId());
+
+    // Set current tag to last selected or to set to default if none selected
+    $currTag = (isset($_POST['lstTag']) && !$_POST['lstTag'] == '0')
+        ? TagTable::getTagById($tags, $_POST['lstTag'])
+        : new Tag();
+
+    // Get all destination options
+    $destinationOptions = $destinationTable->getOptions($dbh);
+
+    // Get all tag types
+    $tagTypes = TagTypeTable::getTagTypes($dbh);
+
+    $currTagType = (isset($_POST['lstTagType']) && !$_POST['lstTagType'] == '0' && !isset($_POST['btnSubmit']['tagType']))
+        ? TagTypeTable::getTagTypeById($tagTypes, $_POST['lstTagType'])
+        : new TagType();
 
     $dbh->closeConnection();
     ?>
+    <script>
+        function clearTagForm() {
+            document.getElementById("tag-0").selected = true;
+            document.getElementById("txtTagName").value = "";
+            document.getElementById("tagType-0").selected = true;
+        }
+    </script>
 </head>
-
-<!--
-    admin.php - web interface for database
-    Student Name: Dylan Johnson, James West
-    Written:  4/10/23
-    Revised:  4/11/23
--->
-
 <body>
 <main>
-    <?= $feedback ?>
     <div id="frame">
-        <form action="<?= htmlentities($_SERVER['PHP_SELF']); ?>" method="POST" name="tblEdit" id="tblEdit">
-            <label for="lstDestination"><strong>Destination</strong></label>
-            <select name="lstDestination" id="lstDestination" onChange="this.form.submit()">
-                <option id="destination-0" value="0">Select a name</option>
-                <?PHP
-                foreach ($options as $option) {
-                    $selected = $currDestination->getId() == (int)$option['destination_id'] ? 'selected="true"' : '';
-                    echo <<<EOF
-                            <option value="{$option['destination_id']}" $selected >
-                                {$option['destination_name']}
-                            </option>
-                        EOF;
-                }
-                ?>
-            </select>
-            <a href="<?= htmlentities($_SERVER['PHP_SELF']) ?>"
-               onclick="document.getElementById('destination-0').selected = true;">
-                New Record
-            </a>
-            <fieldset>
-                <legend>Destination Information</legend>
-                <div class="topLabel">
-                    <label for="txtName">Name</label>
-                    <input type="text" name="txtName" id="txtName" value="<?= $currDestination->getName() ?>"/>
+        <div class="destAllWrapper">
+            <div class="frmGroup">
+                <h2>Destination Form</h2>
+                <!-- Destination form -->
+                <form action="<?= htmlentities($_SERVER['PHP_SELF']); ?>" method="POST" name="destinationEdit"
+                      id="destinationEdit">
+                    <div class="frmSelectWrapper">
+                        <div class="frmSelectLabel">
+                            <!-- Allow user to select a destination from options -->
+                            <label for="lstDestination">Select a Destination</label>
+                            <select name="lstDestination" id="lstDestination" onChange="this.form.submit()">
+                                <!-- Default option -->
+                                <option id="destination-0" value="0">Select a name</option>
+                                <!-- Loop through destination options and populate select options -->
+                                <?PHP foreach ($destinationOptions as $option): ?>
+                                    <!-- Set option value to its destination id and select option if matches current destination -->
+                                    <option value="<?= $option['destination_id'] ?>"
+                                        <?= $currDestination->getId() == (int)$option['destination_id'] ? "selected" : ''; ?>>
+                                        <?= $option['destination_name'] ?>
+                                    </option>
+                                <?PHP endforeach; ?>
+                            </select>
+                        </div>
+                        <a href="<?= htmlentities($_SERVER['PHP_SELF']) ?>"
+                           onclick="document.getElementById('destination-0').selected = true;">
+                            Reset
+                        </a>
+                    </div>
+                    <!-- Display current destination info inputs -->
+                    <fieldset>
+                        <legend>Selected Destination Details</legend>
+                        <div class="fieldWrapper">
+                            <div class="topLabel">
+                                <label for="txtName">Name</label>
+                                <input type="text" name="txtName" id="txtName"
+                                       value="<?= $currDestination->getName() ?>"/>
+                            </div>
+
+                            <div class="topLabel">
+                                <label for="txtImg">Image URL</label>
+                                <input type="text" name="txtImg" id="txtImg"
+                                       value="<?= $currDestination->getImageUrl() ?>"/>
+                            </div>
+
+                            <div class="topLabel">
+                                <label for="txtWebsite">Website</label>
+                                <input type="text" name="txtWebsite" id="txtWebsite"
+                                       value="<?= $currDestination->getWebsite() ?>"/>
+                            </div>
+
+                            <div class="topLabel">
+                                <label for="txtLineOne">Address Line 1</label>
+                                <input type="text" name="txtLineOne" id="txtLineOne"
+                                       value="<?= $currDestination->getLine1() ?>"/>
+                            </div>
+
+                            <div class="topLabel">
+                                <label for="txtLineTwo">Address Line 2</label>
+                                <input type="text" name="txtLineTwo" id="txtLineTwo"
+                                       value="<?= $currDestination->getLine2() ?>"/>
+                            </div>
+
+                            <div class="topLabel">
+                                <label for="txtCity">City</label>
+                                <input type="text" name="txtCity" id="txtCity"
+                                       value="<?= $currDestination->getCity() ?>"/>
+                            </div>
+
+                            <div class="topLabel">
+                                <label for="txtZip">Zip Code</label>
+                                <input type="text" name="txtZip" id="txtZip" value="<?= $currDestination->getZip() ?>"/>
+                            </div>
+
+                            <div class="topLabel">
+                                <label for="txtDescription">Description</label>
+                                <textarea name="txtDescription"
+                                          id="txtDescription"
+                                          onfocusin='this.style.height = this.scrollHeight + "px"'
+                                          onfocusout='this.style.height = "50px"'
+                                          oninput='this.style.height = ""; this.style.height = this.scrollHeight + "px"'
+                                ><?= $currDestination->getDescription() ?></textarea>
+                            </div>
+                        </div>
+                        <input type="hidden" name="txtID" id="txtID" value="<?= $currDestination->getId() ?>">
+                        <div class="btnWrapper">
+
+                            <!-- Allow user to add a destination -->
+                            <button name="btnSubmit[destination]"
+                                    value="add"
+                                    onclick="this.form.submit();">
+                                Add new
+                            </button>
+
+                            <!-- Allow user to update a destination -->
+                            <button name="btnSubmit[destination]"
+                                    value="update"
+                                    onclick="this.form.submit();">
+                                Update
+                            </button>
+                            <!-- Allow user to delete a destination -->
+                            <button name="btnSubmit[destination]"
+                                    value="delete"
+                                    onclick="this.form.submit();"
+                                    class="flxShiftR">
+                                Delete
+                            </button>
+                        </div>
+                    </fieldset>
+                    <input type="hidden" name="lstTagType" value="<?= $currTagType->getId() ?>">
+                    <input type="hidden" name="lstTag" value="<?= $currTag->getId() ?>">
+                </form>
+
+            </div>
+            <div class="frmGroup">
+                <!-- DestinationTag form -->
+                <?PHP if ($currDestination->getId() != 0): ?>
+                    <form action="<?= htmlentities($_SERVER['PHP_SELF']); ?>" method="POST" name="destinationTagEdit"
+                          id="destinationTagEdit">
+                        <fieldset>
+                            <legend>Selected Destination Tags</legend>
+                            <!-- Display tags active for destination -->
+                            <div class="destTagWrapper">
+                                <label for="activeTags[]">Active Tags</label>
+                                <?PHP $size = array_sum(array_map("count", $tagOptions["active"])) + count($tagOptions["active"]) ?>
+                                <select name="activeTags[]" id="activeTags[]" multiple="multiple" size="<?= $size ?>">
+                                    <?PHP foreach ($tagOptions["active"] as $type => $tags): ?>
+                                        <optgroup label="<?= $type ?>">
+                                            <?PHP foreach ($tags as $tag): ?>
+                                                <option value="<?= $tag['tag_id'] ?>"><?= $tag['tag_name'] ?></option>
+                                            <?PHP endforeach; ?>
+                                        </optgroup>
+                                    <?PHP endforeach; ?>
+                                </select>
+
+                                <!-- Remove tag button -->
+                                <button name="btnSubmit[destinationTag]" value="remove" onclick="this.form.submit()">
+                                    Remove
+                                    tag
+                                </button>
+                            </div>
+                            <div class="destTagWrapper">
+                                <!-- Display tags inactive for destination -->
+                                <label for="inactiveTags[]">Inactive Tags</label>
+                                <?PHP $size = array_sum(array_map("count", $tagOptions["inactive"])) + count($tagOptions["inactive"]) ?>
+                                <select name="inactiveTags[]" id="inactiveTags[]" multiple="multiple"
+                                        size="<?= $size ?>">
+                                    <?PHP foreach ($tagOptions["inactive"] as $type => $tags): ?>
+                                        <optgroup label="<?= $type ?>">
+                                            <?PHP foreach ($tags as $tag): ?>
+                                                <option value="<?= $tag['tag_id'] ?>"><?= $tag['tag_name'] ?></option>
+                                            <?PHP endforeach; ?>
+                                        </optgroup>
+                                    <?PHP endforeach; ?>
+                                </select>
+
+                                <!-- Add tag button -->
+                                <button name="btnSubmit[destinationTag]" value="add" onclick="this.form.submit()">Add
+                                    tag
+                                </button>
+                            </div>
+                        </fieldset>
+                        <input type="hidden" name="lstDestination" id="lstDestination"
+                               value="<?= $currDestination->getId() ?>">
+                        <input type="hidden" name="lstTagType" value="<?= $currTagType->getId() ?>">
+
+                    </form>
+                <?PHP endif; ?>
+            </div>
+        </div>
+        <div class="frmGroup">
+            <!-- Tag Form -->
+            <h2>Tag Form</h2>
+            <form action="<?= htmlentities($_SERVER['PHP_SELF']); ?>" method="POST" name="tagEdit" id="tagEdit">
+                <div class="frmSelectWrapper">
+                    <div class="frmSelectLabel">
+                        <label for="lstTag">Select a Tag</label>
+                        <select name="lstTag" id="lstTag" onChange="this.form.submit()">
+                            <option id="tag-0" value="0">Select a name</option>
+                            <?PHP foreach ($tagOptions['all'] as $type => $tags): ?>
+                                <optgroup label="<?= $type ?>">
+                                    <?PHP foreach ($tags as $tag): ?>
+                                        <option value="<?= $tag['tag_id'] ?>" <?= $currTag->getId() == (int)$tag['tag_id'] ? "selected" : ''; ?>>
+                                            <?= $tag['tag_name'] ?>
+                                        </option>
+                                    <?PHP endforeach; ?>
+                                </optgroup>
+                            <?PHP endforeach; ?>
+                        </select>
+                    </div>
+                    <a href="javascript:clearTagForm();">
+                        Reset
+                    </a>
                 </div>
-
-                <div class="topLabel">
-                    <label for="txtImg">Image URL</label>
-                    <input type="text" name="txtImg" id="txtImg" value="<?= $currDestination->getImageUrl() ?>"/>
-                </div>
-
-                <div class="topLabel">
-                    <label for="txtWebsite">Website</label>
-                    <input type="text" name="txtWebsite" id="txtWebsite" value="<?= $currDestination->getWebsite() ?>"/>
-                </div>
-
-                <div class="topLabel">
-                    <label for="txtLineOne">Address Line 1</label>
-                    <input type="text" name="txtLineOne" id="txtLineOne" value="<?= $currDestination->getLine1() ?>"/>
-                </div>
-
-                <div class="topLabel">
-                    <label for="txtLineTwo">Address Line 2</label>
-                    <input type="text" name="txtLineTwo" id="txtLineTwo" value="<?= $currDestination->getLine2() ?>"/>
-                </div>
-
-                <div class="topLabel">
-                    <label for="txtCity">City</label>
-                    <input type="text" name="txtCity" id="txtCity" value="<?= $currDestination->getCity() ?>"/>
-                </div>
-
-                <div class="topLabel">
-                    <label for="txtZip">Zip Code</label>
-                    <input type="text" name="txtZip" id="txtZip" value="<?= $currDestination->getZip() ?>"/>
-                </div>
-
-                <div class="topLabel">
-                    <label for="txtDescription">Description</label>
-                    <input type="text" name="txtDescription" id="txtDescription"
-                           value="<?= $currDestination->getDescription() ?>" size="<?= $currDestination->getLen() ?>"
-                           maxlength="5000"/>
-                </div>
-                <input type="hidden" name="txtID" id="txtID" value="<?= $currDestination->getId() ?>">
-            </fieldset>
-            <button name="btnSubmit[destination]"
-                    value="delete"
-                    onclick="this.form.submit();">
-                Delete Record
-            </button>
-
-            <button name="btnSubmit[destination]"
-                    value="add"
-                    onclick="this.form.submit();">
-                Add New Destination
-            </button>
-
-            <button name="btnSubmit[destination]"
-                    value="update"
-                    onclick="this.form.submit();">
-                Update
-            </button>
-            <br/><br/>
-            <?PHP if ($currDestination->getId() != 0): ?>
                 <fieldset>
-                    <legend><?= $currDestination->getName() ?> Tags</legend>
-                    <label for="selActiveTag[]"><strong>Active Tags </strong></label>
-                    <select name="selActiveTag[]"
-                            id="selActiveTag[]"
-                            size="<?= array_sum(array_map("count", $activeTagOptions)) + count($activeTagOptions) ?>"
-                            multiple="multiple">
-                        <?PHP foreach ($activeTagOptions as $tagType => $tags): ?>
-                            <optgroup label="<?= $tagType ?>">
-                                <?PHP foreach ($tags as $tag): ?>
-                                    <option value="<?= $tag['tag_id'] ?>"><?= $tag['tag_name'] ?></option>
+                    <legend>Selected Tag Details</legend>
+                    <div class="fieldWrapper">
+                        <div class="topLabel">
+                            <label for="txtTagName">Name</label>
+                            <input type="text" name="txtTagName" id="txtTagName"
+                                   value="<?= $currTag->getName() ?>" ?>
+                        </div>
+
+                        <!-- Tag types -->
+                        <div class=frmSelectLabel>
+                            <label for="lstTagTagTypeId">Select Type</label>
+                            <select name="lstTagTagTypeId" id="lstTagTagTypeId">
+                                <option id="tagTagType-0" value="0">Select a tag type</option>
+                                <?PHP foreach ($tagTypes as $type): ?>
+                                    <option value="<?= $type['tag_type_id'] ?>"
+                                        <?= $currTag->getType() == $type['tag_type_id'] ? "selected" : "" ?>>
+                                        <?= $type['tag_type_name'] ?>
+                                    </option>
                                 <?PHP endforeach; ?>
-                            </optgroup>
-                        <?PHP endforeach; ?>
-                    </select>
-                    <button name="frmTag[btnSubmit]"
-                            value="remove"
-                            onclick="this.form.submit();">
-                        Remove
-                    </button>
-                    <label for="selTag[]"><strong>Inactive Tags</strong></label>
-                    <select name="selTag[]"
-                            id="selTag[]"
-                            size="<?= array_sum(array_map("count", $inactiveTagOptions)) + count($inactiveTagOptions) ?>"
-                            multiple="multiple">
-                        <?PHP foreach ($inactiveTagOptions as $tagType => $tags): ?>
-                            <optgroup label="<?= $tagType ?>">
-                                <?PHP foreach ($tags as $tag): ?>
-                                    <option value="<?= $tag['tag_id'] ?>"><?= $tag['tag_name'] ?></option>
-                                <?PHP endforeach; ?>
-                            </optgroup>
-                        <?PHP endforeach; ?>
-                    </select>
-                    <button name="btnSubmit[Tag]"
-                            value="add"
-                            onclick="this.form.submit();">
-                        Add
-                    </button>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="btnWrapper">
+                        <button name="btnSubmit[tag]"
+                                value="add"
+                                onclick="this.form.submit();">
+                            Add new
+                        </button>
+                        <button name="btnSubmit[tag]"
+                                value="update"
+                                onclick="this.form.submit();">
+                            Update
+                        </button>
+                        <button name="btnSubmit[tag]"
+                                value="delete"
+                                onclick="this.form.submit();"
+                                class="flxShiftR">
+                            Delete
+                        </button>
+                    </div>
                 </fieldset>
-            <?PHP endif; ?>
-        </form>
-        <!--        TODO add, update, remove, tag form -->
-        <!--        TODO add, update, remove tag_type form -->
-        <!--        TODO css -->
+                <input type="hidden" name="lstDestination" id="lstDestination" value="<?= $currDestination->getId() ?>">
+            </form>
+        </div>
+
+        <div class="frmGroup">
+            <h2 id="headerTagType">Tag Type Form</h2>
+            <!-- Tag Type Form -->
+            <form action="<?= htmlentities($_SERVER['PHP_SELF']); ?>" method="POST" name="tagTypeEdit" id="tagTypeEdit">
+                <div class="frmSelectLabel">
+                    <label for="lstTagType">Selected Tag Type Details</label>
+                    <select name="lstTagType" id="lstTagType" onchange="this.form.submit()">
+                        <option id="tagType-0" value="0">Select a tag type</option>
+                        <?PHP foreach ($tagTypes as $type): ?>
+                            <option value="<?= $type['tag_type_id'] ?>"
+                                <?= $currTagType->getId() == $type['tag_type_id'] ? "selected" : "" ?>>
+                                <?= $type['tag_type_name'] ?>
+                            </option>
+                        <?PHP endforeach; ?>
+                    </select>
+                </div>
+                <fieldset>
+                    <legend>Selected Tag Type</legend>
+                    <div class="topLabel">
+                        <label for="txtTagTypeName">Name</label>
+                        <input type="text" name="txtTagTypeName" id="txtTagTypeName"
+                               value="<?= $currTagType->getName() ?>" ?>
+                    </div>
+                    <div class="btnWrapper">
+                        <button name="btnSubmit[tagType]"
+                                value="delete"
+                                onclick="this.form.submit();">
+                            Delete
+                        </button>
+                        <button name="btnSubmit[tagType]"
+                                value="add"
+                                onclick="this.form.submit();">
+                            Add new
+                        </button>
+                        <button name="btnSubmit[tagType]"
+                                value="update"
+                                onclick="this.form.submit();">
+                            Update
+                        </button>
+                    </div>
+                    <input type="hidden" name="lstDestination" value="<?= $currDestination->getId() ?>">
+                    <input type="hidden" name="lstTag" value="<?= $currTag->getId() ?>">
+                </fieldset>
+            </form>
+        </div>
     </div>
 </main>
 </body>
+</html>

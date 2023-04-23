@@ -1,92 +1,133 @@
-/* registration.css - Style sheet for registration.php
-   Student Name
-   Written: Current Date
-   Revised:
-*/
-/*body {*/
-/*   background: #EEE;*/
-/*   font-size:  16px;*/
-/*   font-family:optima, helvetica, arial, sans-serif;*/
-/*}*/
+/**
+    style.css - Stylesheet for database creation output.
+    Contributors:
+        James West - westj4@csp.edu
+        Dylan Johnson - johnsond47@csp.edu
+    Course: CSC235 Server-Side Development
+    Assignment: Group Project
+    Date: 4/21/2023
+ */
 
-/*#frame h1 {*/
-/*   color: #000080;*/
-/*   margin-bottom: 3%;*/
-/*}*/
+#frame {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 50px;
+    max-width: 80vw;
+    min-width: 750px;
+    margin-left: 40px;
+    margin-bottom: 30px;
+}
 
-/*h2 {*/
-/*   color: #000080;   */
-/*   text-align: center;*/
-/*   border-top: white 1px solid;*/
-/*   border-bottom: white 1px solid;*/
-/*}*/
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
 
-/*#frame {*/
-/*   max-width:  1200px;*/
-/*   margin: auto;*/
-/*   border: 1px solid #000080;*/
-/*   padding: 10px;*/
-/*}*/
+.frmSelectLabel {
+    margin-bottom: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    justify-content: space-between;
+}
 
-/*!* Form Styles *!*/
-/*.topLabel {*/
-/*   float: left;*/
-/*   display: inline-block;*/
-/*   margin: 0px 20px 0 0px; */
-/*}*/
+.frmSelectWrapper > a {
+    margin-left: auto;
+    margin-right: 2px;
+}
+.frmSelectWrapper {
+    margin-left: 2px;
+    margin-right: 2px;
+    display: flex;
+    align-items: end;
+    margin-bottom: 3px;
+}
+form > select {
+    width: fit-content;
+}
 
-/*.topLabel label {*/
-/*   display:block;  !* position labels above text boxes *!*/
-/*}*/
+fieldset {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
 
-/*input[type=text] {*/
-/*   font-size:  1em;*/
-/*   padding:5px;*/
-/*   margin: 0px;*/
-/*   display:inline;*/
-/*}*/
+.btnWrapper {
+    margin-top: 15px;
+    margin-bottom: -20px;
+    display: flex;
+    gap: 10px;
+}
 
-/*select {*/
-/*   font-size:  1.2em;   */
-/*}*/
+.fieldWrapper {
+    display: flex;
+    flex-flow: wrap;
+    gap: 20px
+}
+.topLabel {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
 
-/*button {*/
-/*   font-size:  1em;*/
-/*   padding:10px;*/
-/*   border-radius: 10px;*/
-/*   background: white;*/
-/*   margin: 5px 5px;*/
-/*}*/
-
-/*fieldset {*/
-/*   color:  #000080;*/
-/*   border: 1px solid #DDD;*/
-/*   border-radius: 10px;*/
-/*}*/
-
-/*#txtDescription {*/
-/*   width: 75%;*/
-/*   word-wrap: break-word;*/
-/*   resize: both;*/
-/*}*/
-
-/*!* Table Styles *!*/
-/*table {*/
-/*   width:  100%;*/
-/*}*/
-
-/*td, th {*/
-/*   padding:5px 20px;*/
-/*   background: white;*/
-/*   color:  black;*/
-/*}*/
-
-/*th {*/
-/*   background: #EEE;*/
-/*   color:  #000080;*/
-/*}*/
-
-#lstTag {
-    display: block;
+.topLabel > input {
+    width: 300px;
+    max-width: 200px;
     height: fit-content;
+}
+
+.flxShiftR {
+    margin-left: auto;
+}
+
+#destinationTagEdit {
+    margin-top: 20px;
+}
+
+#destinationTagEdit > fieldset {
+    display: flex;
+    flex-direction: row;
+}
+
+.destTagWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 20px 30px;
+}
+
+.destTagWrapper > select {
+    width: fit-content;
+    overflow-y: hidden;
+    padding: 7px;
+    flex: 2;
+}
+
+.destTagWrapper > label {
+    font-style: italic;
+    width: fit-content;
+    margin: auto;
+}
+
+textarea {
+    width: 600px;
+    height: 50px;
+    padding: 10px;
+}
+
+#lstTagType {
+    width: fit-content;
+}
+
+.destAllWrapper {
+    display: flex;
+    gap: 10px;
+    align-items: end;
+}
+.frmGroup {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }

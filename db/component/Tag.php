@@ -17,6 +17,7 @@ class Tag
         $this->tag_id = $id;
         $this->tag_type = $type;
         $this->tag_name = $name;
+        $this->tag_type_name = $tag_type_name;
     }
 
 
