@@ -1,9 +1,45 @@
 <?php
-
+/**
+ * DestinationTable.php - Class assists in handling Destination Table related operations
+ * Written by: James West - westj4@csp.edu - April, 2023
+ */
 include_once "Table.php";
+
 class DestinationTable extends Table
 {
+    /**
+     * @param DBHandler $dbh
+     * @param Destination $destination
+     * @return bool
+     */
+    public function add(DBHandler $dbh, Destination $destination): bool
+    {
+        $conn = $dbh->getConn();
+        $sql = <<<SQL
+            CALL addDestination(?, ?, ?, ?, ?, ?, ?, ?)
+        SQL;
+        $name = $destination->getName();
+        $desc = $destination->getDescription();
+        $img = $destination->getImageUrl();
+        $web = $destination->getWebsite();
+        $zip = $destination->getZip();
+        $l1 = $destination->getLine1();
+        $l2 = $destination->getLine2();
+        $city = $destination->getCity();
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssssssss", $name, $desc, $img, $web, $zip, $l1, $l2, $city);
+        $stmt->execute();
+        $stmt->close();
+        $dbh->resetConn();
+        return true;
+    }
+
     private string $name = "destination";
+
+    /**
+     * @param mysqli $conn
+     * @return bool
+     */
     public static function addTable(mysqli $conn): bool
     {
         $sql = <<<SQL
@@ -23,41 +59,29 @@ class DestinationTable extends Table
         return $conn->query($sql);
     }
 
-    public function getName(): string
+    /**
+     * @param DBHandler $dbh
+     * @param Destination $destination
+     * @return bool
+     */
+    public function delete(DBHandler $dbh, Destination $destination): bool
     {
-        return $this->name;
-    }
-
-    public function add(DBHandler $dbh, Destination $destination): bool
-    {
-        $conn = $dbh->resetConn();
+        $conn = $dbh->getConn();
         $sql = <<<SQL
-            CALL addDestination(?, ?, ?, ?, ?, ?, ?, ?)
+            CALL deleteDestination({$destination->getId()});
         SQL;
-        $name = $destination->getName();
-        $desc = $destination->getDescription();
-        $img = $destination->getImageUrl();
-        $web = $destination->getWebsite();
-        $zip = $destination->getZip();
-        $l1 = $destination->getLine1();
-        $l2 = $destination->getLine2();
-        $city = $destination->getCity();
-        $stmt = $conn->prepare($sql);
-        if($stmt->errno)
-        {
-            $stmt->close();
-            return false;
-        }
-        $stmt->bind_param("ssssssss", $name, $desc, $img, $web, $zip, $l1, $l2, $city);
-        $stmt->execute();
-        $stmt->close();
-        $dbh->resetConn();
-        return true;
+        $destination->clear();
+        return $conn->query($sql);
     }
 
+    /**
+     * @param DBHandler $dbh
+     * @param int $id
+     * @return Destination
+     */
     public function getById(DBHandler $dbh, int $id): Destination
     {
-        $conn = $dbh->resetConn();
+        $conn = $dbh->getConn();
         $stmt = $conn->prepare(
             <<<SQL
             SELECT *, LENGTH(destination_desc) AS 'len' FROM destination WHERE destination_id = ?
@@ -69,29 +93,47 @@ class DestinationTable extends Table
         $data = $result->fetch_assoc();
         $stmt->close();
         $dbh->resetConn();
-        if($data) {
+        if ($data) {
             return new Destination($data['destination_id'], $data['destination_name'], $data['destination_desc'], $data['zip'],
                 $data['line_1'], $data['line_2'], $data['city'], $data['image_url'], $data['website']);
         } else {
             return new Destination();
         }
     }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param DBHandler $dbh
+     * @return array
+     */
     public function getOptions(DBHandler $dbh): array
     {
-        $conn=$dbh->getConn();
+        $conn = $dbh->getConn();
         $result = $conn->query("SELECT destination_id, destination_name FROM destination ORDER BY destination_name");
-        if(!$result)
-        {
+        if (!$result) {
             echo "<br>Destination table options error: $conn->error";
             return [];
         }
         return $result->fetch_all(1);
     }
+
+    /**
+     * @param DBHandler $dbh
+     * @param Destination $destination
+     * @return bool
+     */
     public function update(DBHandler $dbh, Destination $destination): bool
     {
-        $conn = $dbh->resetConn();
+        $conn = $dbh->getConn();
         $desc = addslashes($destination->getDescription());
-        $sql =<<<SQL
+        $sql = <<<SQL
             CALL updateDestination(?,?,?,?,?,?,?,?,?)
         SQL;
 
@@ -106,8 +148,7 @@ class DestinationTable extends Table
         $city = $destination->getCity();
 
         $stmt->bind_param("sssssssss", $id, $name, $desc, $imageUrl, $website, $zip, $line1, $line2, $city);
-        if ($stmt->error)
-        {
+        if ($stmt->error) {
             $stmt->close();
             return false;
         }
@@ -115,25 +156,5 @@ class DestinationTable extends Table
         $stmt->close();
         $dbh->resetConn();
         return true;
-    }
-    public function delete(DBHandler $dbh, Destination $destination): bool
-    {
-        $conn = $dbh->getConn();
-        $sql =<<<SQL
-            CALL deleteDestination({$destination->getId()});
-        SQL;
-        $destination->clear();
-        return $conn->query($sql);
-    }
-
-    public function getErrMsg(mysqli $conn, string $name): string
-    {
-        switch ($conn->errno)
-        {
-            case 1062:
-                return "Error adding $name: a destination with that name already exists.";
-            default:
-                return "Error: $conn->error";
-        }
     }
 }

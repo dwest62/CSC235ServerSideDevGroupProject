@@ -1,9 +1,18 @@
 <?php
 
 include_once "Table.php";
+
+/**
+ * DestinationTagTable.php - Class assists in handling Destination Tag Table related operations
+ * Written by: James West - westj4@csp.edu - April, 2023
+ */
 class DestinationTagTable extends Table
 {
 
+    /**
+     * @param mysqli $conn
+     * @return bool
+     */
     public static function addTable(mysqli $conn): bool
     {
         $sql = <<<SQL
@@ -20,6 +29,44 @@ class DestinationTagTable extends Table
         return $conn->query($sql);
     }
 
+    /**
+     * @param DBHandler $dbh
+     * @param array $tag_ids
+     * @param int $destination_id
+     * @return bool
+     */
+    public static function addTagsToDestination(DBHandler $dbh, array $tag_ids, int $destination_id): bool
+    {
+        $dbh->openConnection();
+        $conn = $dbh->getConn();
+        $sql = <<<SQL
+            INSERT INTO destination_tag (destination, tag) VALUES (?, ?);
+        SQL;
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('ii', $destination_id, $tag);
+        foreach ($tag_ids as $tag_id) {
+            $tag = $tag_id;
+            $stmt->execute();
+        }
+        $stmt->close();
+        echo $conn->error;
+        return true;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return "destination_tag";
+    }
+
+    /**
+     * @param DBHandler $dbh
+     * @param array $tag_ids
+     * @param int $destination_id
+     * @return bool
+     */
     public static function removeTagsFromDestination(DBHandler $dbh, array $tag_ids, int $destination_id): bool
     {
 
@@ -35,28 +82,6 @@ class DestinationTagTable extends Table
         $stmt->execute();
         $stmt->close();
         return true;
-    }
-    public static function addTagsToDestination(DBHandler $dbh, array $tag_ids, int $destination_id): bool
-    {
-        $dbh->openConnection();
-        $conn = $dbh->getConn();
-        $sql = <<<SQL
-            INSERT INTO destination_tag (destination, tag) VALUES (?, ?);
-        SQL;
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param('ii', $destination_id, $tag);
-        foreach ($tag_ids as $tag_id)
-        {
-            $tag = $tag_id;
-            $stmt->execute();
-        }
-        $stmt->close();
-        echo $conn->error;
-        return true;
-    }
-    public function getName(): string
-    {
-        return "destination_tag";
     }
 
 }

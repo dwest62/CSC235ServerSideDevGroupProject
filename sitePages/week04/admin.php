@@ -1,6 +1,6 @@
 <!-- 
     admin.php - web interface for database 
-    Student Name: Dylan Johnson, James West
+    Student Name: Dylan Johnson
     Written:  4/10/23
     Revised:  
 -->

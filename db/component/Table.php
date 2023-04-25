@@ -1,11 +1,28 @@
 <?php
 
+/**
+ * Table.php - abstract table class assists in DB operations
+ * Written by: James West - westj4@csp.edu - April, 2023
+ */
 abstract class Table
 {
+    /**
+     * @param mysqli $conn
+     * @return bool
+     */
     abstract public static function addTable(mysqli $conn): bool;
 
+    /**
+     * @return string
+     */
     abstract public function getName(): string;
 
+    /**
+     * @param mysqli $conn
+     * @param array $entry
+     * @param bool $addQuotesToStringEntries
+     * @return bool
+     */
     public function addJSONEntry(mysqli $conn, array $entry, bool $addQuotesToStringEntries = false): bool
     {
         $cols = join(", ", array_keys($entry));
@@ -24,6 +41,13 @@ abstract class Table
         SQL;
         return $conn->query($sql);
     }
+
+    /**
+     * @param mysqli $conn
+     * @param array $entries
+     * @param bool $addQuotes
+     * @return bool
+     */
     public function addJSONEntries(mysqli $conn, array $entries, bool $addQuotes = false): bool
     {
         $tableEntries = $entries[$this->getName()];
@@ -37,6 +61,10 @@ abstract class Table
     }
 
 
+    /**
+     * @param mysqli $conn
+     * @return string
+     */
     public function getDisplay(mysqli $conn): string
     {
         $sql = <<<SQL
@@ -63,6 +91,11 @@ abstract class Table
         }
     }
 
+    /**
+     * @param array $values
+     * @param bool $isHeading
+     * @return string
+     */
     private static function getRow(array $values, bool $isHeading = false): string
     {
         $openTag = $isHeading ? "<th>" : "<td>";

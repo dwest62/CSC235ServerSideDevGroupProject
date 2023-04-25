@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Tag.php - Class represents a tag
+ * Written by: James West - westj4@csp.edu - April, 2023
+ */
 class Tag
 {
     private int $tag_id;
@@ -60,6 +64,7 @@ class Tag
     {
         return $this->tag_name;
     }
+
     /**
      * @param string $tag_name
      */

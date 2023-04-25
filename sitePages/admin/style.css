@@ -131,3 +131,8 @@ textarea {
     flex-direction: column;
     justify-content: space-between;
 }
+
+p {
+    min-height: 20px;
+    font-size: 1em;
+}

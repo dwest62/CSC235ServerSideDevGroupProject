@@ -1,8 +1,16 @@
 <?php
 include_once "Table.php";
 
+/**
+ * TagTable.php - Class assists in handling Tag Table related operations
+ * Written by: James West - westj4@csp.edu - April, 2023
+ */
 class TagTable extends Table
 {
+    /**
+     * @param mysqli $conn
+     * @return bool
+     */
     public static function addTable(mysqli $conn): bool
     {
         $sql = <<<SQL
@@ -18,9 +26,55 @@ class TagTable extends Table
         return $conn->query($sql);
     }
 
+    /**
+     * @param DBHandler $dbh
+     * @param string $name
+     * @param int $type
+     * @return bool
+     */
+    public static function addTag(DBHandler $dbh, string $name, int $type): bool
+    {
+        $sql = <<<SQL
+            INSERT INTO tag(tag.tag_name, tag.tag_type) VALUES (?,?)
+        SQL;
+        $conn = $dbh->getConn();
+        $stmt = $dbh->getConn()->prepare($sql);
+        if (!$stmt) {
+            echo $conn->error;
+            return false;
+        }
+        $stmt->bind_param("si", $name, $type);
+        $stmt->execute();
+        $stmt->close();
+        return true;
+    }
+
+    /**
+     * @param DBHandler $dbh
+     * @param int $id
+     * @return bool
+     */
+    public static function deleteTag(DBHandler $dbh, int $id): bool
+    {
+        $sql = <<<SQL
+            DELETE FROM tag WHERE tag.tag_id = ?
+        SQL;
+        $stmt = $dbh->getConn()->prepare($sql);
+        if ($stmt->error) {
+            return false;
+        }
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $stmt->close();
+        return true;
+    }
+
+    /**
+     * @param DBHandler $dbh
+     * @return array
+     */
     public static function getAllTagsJoinTagTypeName(DBHandler $dbh): array
     {
-        $dbh->openConnection();
         $conn = $dbh->getConn();
         $sql = <<<SQL
             SELECT destination, tag_id, tag_name, tag_type_id, tag_type_name FROM destination_tag
@@ -39,11 +93,19 @@ class TagTable extends Table
         return $result;
     }
 
+    /**
+     * @return string
+     */
     public function getName(): string
     {
         return "tag";
     }
 
+    /**
+     * @param array $tags
+     * @param int $id
+     * @return Tag
+     */
     public static function getTagById(array $tags, int $id): Tag
     {
         foreach ($tags as $tag) {
@@ -54,7 +116,12 @@ class TagTable extends Table
         return new Tag();
     }
 
-    public static function getTagsGroupByActiveGroupByTagType(array $tags, int $destinationId): array
+    /**
+     * @param array $tags
+     * @param int $destinationId
+     * @return array|array[]
+     */
+    public static function sortTagsByActiveAndType(array $tags, int $destinationId): array
     {
         // Map containing visited tags
         $visited = [];
@@ -78,49 +145,25 @@ class TagTable extends Table
         return $result;
     }
 
-    public static function addTag(DBHandler $dbh, string $name, int $type): bool {
-        $dbh->openConnection();
-        $sql = <<<SQL
-            INSERT INTO tag(tag.tag_name, tag.tag_type) VALUES (?,?)
-        SQL;
-        $conn = $dbh->getConn();
-        $stmt = $dbh->getConn()->prepare($sql);
-        if(!$stmt) {
-            echo $conn->error;
-            return false;
-        }
-        $stmt->bind_param("si", $name, $type);
-        $stmt->execute();
-        $stmt->close();
-        return true;
-    }
-    public static function updateTag(DBHandler $dbh, int $id, string $name, int $type): bool {
-        $dbh->openConnection();
+    /**
+     * @param DBHandler $dbh
+     * @param int $id
+     * @param string $name
+     * @param int $type
+     * @return bool
+     */
+    public static function updateTag(DBHandler $dbh, int $id, string $name, int $type): bool
+    {
         $sql = <<<SQL
             UPDATE tag SET tag.tag_name = ?, tag.tag_type = ? WHERE tag.tag_id = ?
         SQL;
         $conn = $dbh->getConn();
         $stmt = $dbh->getConn()->prepare($sql);
-        if(!$stmt) {
+        if (!$stmt) {
             echo $conn->error;
             return false;
         }
-        $stmt->bind_param("sii",$name, $type, $id);
-        echo $stmt->execute();
-        $stmt->close();
-        return true;
-    }
-
-    public static function deleteTag(DBHandler $dbh, int $id): bool {
-        $dbh->openConnection();
-        $sql = <<<SQL
-            DELETE FROM tag WHERE tag.tag_id = ?
-        SQL;
-        $stmt = $dbh->getConn()->prepare($sql);
-        if($stmt->error) {
-            return false;
-        }
-        $stmt->bind_param("i",$id);
+        $stmt->bind_param("sii", $name, $type, $id);
         $stmt->execute();
         $stmt->close();
         return true;

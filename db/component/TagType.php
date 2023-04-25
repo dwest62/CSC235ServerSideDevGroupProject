@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * TagType.php - Class represents a Tag Type
+ * Written by: James West - westj4@csp.edu - April, 2023
+ */
 class TagType
 {
     private int $id;

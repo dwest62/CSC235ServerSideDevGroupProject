@@ -1,13 +1,42 @@
 <?php
 
+/**
+ * DBHandler.php - class assists in managing frequent mysqli operations
+ * Written by: James West - westj4@csp.edu - April, 2023
+ */
 class DBHandler
 {
+    /**
+     * @var mysqli
+     */
     private mysqli $conn;
+    /**
+     * @var bool
+     */
     private bool $connected;
+    /**
+     * @var string|null
+     */
     private ?string $hostname;
+    /**
+     * @var string|null
+     */
     private ?string $username;
+    /**
+     * @var string|null
+     */
     private ?string $password;
+    /**
+     * @var string|null
+     */
     private ?string $database;
+
+    /**
+     * @param string|null $hostname
+     * @param string|null $userName
+     * @param string|null $password
+     * @param string|null $database
+     */
     public function __construct(
         ?string $hostname = NULL,
         ?string $userName = NULL,
@@ -20,53 +49,48 @@ class DBHandler
         $this->password = $password;
         $this->database = $database;
         $conn = new mysqli(
-            self::getParam($hostname, "host"),
-            self::getParam($userName, "user"),
-            self::getParam($password, "password"),
+            $hostname,
+            $userName,
+            $password,
             $database
         );
 
-        if($conn->connect_error) {
+        if ($conn->connect_error) {
             die("Connection Error: $conn->connect_error");
         }
         $this->conn = $conn;
         $this->connected = true;
     }
 
-    public function addProcedure($sql): string
-    {
-        if(!$this->connected) {$this->openConnection();}
-        return $this->conn->query($sql) ? "Success" : "Failed: {$this->conn->error}";
-    }
 
-
-
-    public function openConnection(): void
-    {
-        $this->conn= new mysqli($this->hostname, $this->username, $this->password, $this->database);
-        if($this->conn->connect_error) {
-            die("Connection Error: {$this->conn->connect_error}");
-        }
-        $this->connected = true;
-    }
-
-    public function closeConnection():void
+    /**
+     * @return void
+     */
+    public function closeConnection(): void
     {
         $this->conn->close();
         $this->connected = false;
     }
+
+
+    /**
+     * @param string $dbName
+     * @return bool
+     */
     public function createDatabase(string $dbName): bool
     {
-
         $sql = "CREATE DATABASE IF NOT EXISTS $dbName";
         $result = $this->conn->query($sql);
-        if(!$this->conn->error)
-        {
+        if (!$this->conn->error) {
             $this->conn->select_db($dbName);
         }
         return $result;
     }
 
+    /**
+     * @param string $dbName
+     * @return bool
+     */
     public function databaseExists(string $dbName): bool
     {
         $sql = "SELECT schema_name FROM information_schema.schemata WHERE SCHEMA_NAME LIKE '$dbName'";
@@ -75,41 +99,34 @@ class DBHandler
         return $this->conn->query($sql)->num_rows;
     }
 
+    /**
+     * @param $result
+     * @return string
+     */
+    public function displayQuerySuccess($result): string
+    {
+        return $result ? "Success" : "Failed: {$this->conn->error}";
+    }
 
+
+    /**
+     * @param string $dbName
+     * @return bool
+     */
     public function dropDatabase(string $dbName): bool
     {
-        $sql =
-            "DROP DATABASE $dbName";
+        $sql = "DROP DATABASE $dbName";
         return $this->conn->query($sql);
     }
 
-    private function getParam(?string $param, string $type): string
-    {
-        if ($param || $param = ini_get("mysql.default_$type")):
-            return $param;
-        else: die("Connection Error: Invalid Server Parameter for $type");
-        endif;
-    }
-
+    /**
+     * @return mysqli
+     */
     public function getConn(): mysqli
     {
         return $this->conn;
     }
 
-    public function resetConn(): mysqli
-    {
-        if($this->isConnected())
-        {
-            $this->conn->close();
-        }
-        $this->openConnection();
-        return $this->conn;
-    }
-
-    public function displayQuerySuccess($result): string
-    {
-        return $result ? "Success" : "Failed: {$this->conn->error}";
-    }
 
     /**
      * @return bool
@@ -117,5 +134,29 @@ class DBHandler
     public function isConnected(): bool
     {
         return $this->connected;
+    }
+
+    /**
+     * @return void
+     */
+    public function openConnection(): void
+    {
+        $this->conn = new mysqli($this->hostname, $this->username, $this->password, $this->database);
+        if ($this->conn->connect_error) {
+            die("Connection Error: {$this->conn->connect_error}");
+        }
+        $this->connected = true;
+    }
+
+    /**
+     * @return mysqli
+     */
+    public function resetConn(): mysqli
+    {
+        if ($this->isConnected()) {
+            $this->conn->close();
+        }
+        $this->openConnection();
+        return $this->conn;
     }
 }

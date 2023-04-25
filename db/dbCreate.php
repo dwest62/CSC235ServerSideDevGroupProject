@@ -5,33 +5,36 @@
     <title>Tourism Site</title>
     <link rel="stylesheet" type="text/css" href="style.css">
     <!-- dbfCreate.php - Creates new web tourism database and populates with data displaying log of the results.
-        Note: Drops existing database if exists.
         Contributors:
             James West - westj4@csp.edu
             Dylan Johnson - johnsond47@csp.edu
         Course: CSC235 Server-Side Development
         Assignment: Group Project
         Date: 4/1/2023
-        Last modified: 4/16/2023
+        Last modified: 4/25/2023
     -->
 
     <?PHP
-        include_once "component/DBHandler.php";
+        include_once 'component/DBHandler.php';
         include_once "component/DestinationTable.php";
         include_once "component/DestinationTagTable.php";
         include_once "component/Table.php";
         include_once "component/TagTable.php";
         include_once "component/TagTypeTable.php";
-        include_once "../../params.php";
         require_once "component/dbProcedure.php";
+
+        /** param.php provides server specific constants: SERVER, USER, PASSWORD */
+        require_once "../../params.php";
 
         const DB_NAME = "dbtravelminnesota";
 
+        // Get start data from JSON file
         $startData = json_decode(file_get_contents("data.json", true), true);
-        $dbh = new DBHandler(SERVER, USER, PASSWORD, NULL);
+        // Connect to DB and initialize new DBHandler
+        $dbh = new DBHandler(SERVER, USER, PASSWORD, NULL); // ../../params.php
+
+        // Initialize table objects
         $tables = [new DestinationTable(), new TagTypeTable(), new TagTable(), new DestinationTagTable()];
-
-
 
     ?>
 </head>
@@ -67,7 +70,7 @@
     <ul>
         <?PHP foreach (getProcedures() as $name=>$procedure): ?>
             <li>
-                Adding <?=$name?> - <?= $dbh->addProcedure($procedure)?>
+                Adding <?=$name?> - <?= $dbh->displayQuerySuccess($dbh->getConn()->query($procedure))?>
             </li>
         <?PHP endforeach; ?>
     </ul>

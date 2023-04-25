@@ -1,16 +1,30 @@
 <?php
 
+/**
+ * Destination.php - Class represents a destination.
+ * Written by: James West - westj4@csp.edu - April, 2023
+ */
 class Destination
 {
+
     private int $id;
+
     private string $name;
+
     private string $description;
+
     private string $zip;
+
     private string $line_1;
+
     private string $line_2;
+
     private string $city;
+
     private string $image_url;
+
     private string $website;
+
     private int $len;
 
     /**
@@ -26,7 +40,7 @@ class Destination
      * @param int $len
      */
     public function __construct(
-        int $id = 0,
+        int    $id = 0,
         string $name = "",
         string $description = "",
         string $zip = "",
@@ -35,7 +49,7 @@ class Destination
         string $city = "",
         string $image_url = "",
         string $website = "",
-        int $len = 0
+        int    $len = 0
     )
     {
         $this->id = $id;
@@ -48,6 +62,23 @@ class Destination
         $this->image_url = $image_url;
         $this->website = $website;
         $this->len = $len;
+    }
+
+    /**
+     * Set all destination values to default values
+     * @return void
+     */
+    public function clear(): void
+    {
+        $this->id = 0;
+        $this->name = "";
+        $this->description = "";
+        $this->city = "";
+        $this->zip = "";
+        $this->line_1 = "";
+        $this->line_2 = "";
+        $this->len = 0;
+        $this->website = "";
     }
 
     /**
@@ -200,17 +231,5 @@ class Destination
     public function setId(int $id): void
     {
         $this->id = $id;
-    }
-    public function clear(): void
-    {
-        $this->id=0;
-        $this->name = "";
-        $this->description = "";
-        $this->city = "";
-        $this->zip = "";
-        $this->line_1 = "";
-        $this->line_2 = "";
-        $this->len = 0;
-        $this->website="";
     }
 }
