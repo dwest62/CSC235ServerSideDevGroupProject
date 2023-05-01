@@ -32,7 +32,7 @@
     $tagTable = new TagTable();
 
     // Update to provide feedback on form operations
-    $feedback = "<p></p>";
+    $feedback = "<p class='success'>Feedback Displayed Here</p>";
 
     // Handle the various form button submissions
     if (isset($_POST['btnSubmit'])) {
@@ -166,11 +166,25 @@
     </script>
 </head>
 <body>
+<header>
+    <img id="logo" src="/groupProject/graphic/logo.png"/>
+    <nav>
+        <a href="/groupProject/sitePages/user/index.php">Home</a>
+        <div class="divider"></div>
+        <a href="/groupProject/sitePages/readMe/readMe.html">Read Me</a>
+        <div class="divider"></div>
+        <a href="/groupProject/sitePages/admin/admin.php">Admin</a>
+        <div class="divider"></div>
+        <a href="/groupProject/sitePages/user/showJSONData.php">Show JSON data</a>
+    </nav>
+</header>
 <main>
     <!-- Feedback for form operations -->
-    <hr/>
-    <?= $feedback ?>
-    <hr/>
+    <div id="feedback">
+        <hr/>
+        <?= $feedback ?>
+        <hr/>
+    </div>
     <div id="frame">
         <div class="destAllWrapper">
             <div class="frmGroup">

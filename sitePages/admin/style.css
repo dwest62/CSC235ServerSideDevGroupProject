@@ -1,8 +1,6 @@
 /**
     style.css - Stylesheet for database creation output.
-    Contributors:
-        James West - westj4@csp.edu
-        Dylan Johnson - johnsond47@csp.edu
+    Written by: James West - westj4@csp.edu
     Course: CSC235 Server-Side Development
     Assignment: Group Project
     Date: 4/21/2023
@@ -133,6 +131,85 @@ textarea {
 }
 
 p {
-    min-height: 20px;
+    min-height: 10px;
     font-size: 1em;
+}
+
+body {
+    margin: 50px;
+}
+
+h2 {
+    font-size: large;
+    text-decoration: underline;
+}
+
+p {
+    font-size: 16px;
+}
+
+img {
+    width: 200px;
+}
+
+.flxWrapper {
+    display: flex;
+    gap: 30px;
+}
+
+#logo {
+    display: block;
+    width: 300px;
+    height: 90px;
+    border-radius: 10px;
+    object-fit: cover;
+    object-position: center;
+    margin: auto;
+}
+
+nav {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+nav > a {
+    color: #2F95FA;
+}
+
+header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.divider {
+    margin: auto 0;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #E8FA37;
+    border: #2F95FA dashed 1px;
+}
+
+#feedback {
+    display: block;
+    width: 500px;
+    margin: 50px auto 0px;
+}
+
+#feedback > p {
+    width: fit-content;
+    margin: 12px auto;
+}
+
+.success {
+    color: #144a79;
+}
+
+.failed {
+    color: darkred;
 }

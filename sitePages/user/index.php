@@ -25,8 +25,6 @@
     ?>
     <script>
             function getData() {
-                var counter = 0;
-                var name = document.getElementById("destination_name");
                 var description = document.getElementById("descr");
                 var link = document.getElementById("link");
                 var address = document.getElementById("address");
@@ -49,17 +47,13 @@
                         address.innerHTML = "";
                         image.innerHTML = "";
                         for(var index in dataObject) {
-                            if(dataObject[index].destination_name) {
-                                //Populate the databox using array data returned from server
-                                name.innerHTML += '<h2>' + dataObject[index].destination_name + '</h2>';
-                            }
                             if(dataObject[index].destination_desc) {
                                 //Populate the databox using array data returned from server
                                 description.innerHTML += '<p>' + dataObject[index].destination_desc + '</p>';
                             }
                             if(dataObject[index].website) {
                                 //Populate the databox using array data returned from server
-                                link.innerHTML += '<a href="' + dataObject[index].website + '"> ' + dataObject[index].destination_name + ' Website</a>';
+                                link.innerHTML += '<a href="' + dataObject[index].website + '"> ' + 'Visit Website</a>';
                             }
                             if(dataObject[index].zip) {
                                 address.innerHTML += '<h2> Address </h2>'
@@ -87,11 +81,19 @@
         </script>
 </head>
 <body>
-    
-    <header>
-        <h1>Destination Selector</h1>
-        <img src="graphic/minnesota.png" alt="Minnesota Image">
-    </header>
+
+<header>
+    <img id="logo" src="/groupProject/graphic/logo.png" />
+    <nav>
+        <a href="/groupProject/sitePages/user/index.php">Home</a>
+        <div class="divider"></div>
+        <a href="/groupProject/sitePages/readMe/readMe.html">Read Me</a>
+        <div class="divider"></div>
+        <a href="/groupProject/sitePages/admin/admin.php">Admin</a>
+        <div class="divider"></div>
+        <a href="/groupProject/sitePages/user/showJSONData.php">Show JSON data</a>
+    </nav>
+</header>
     
     <main>
         <div id="dropdown">
@@ -112,20 +114,19 @@
                 dropdown.addEventListener('change', getData);
             </script>
         </div>
-        
-        <div id="destination_name">
-            
-        </div>
+
+
         <div id="descr">
+
+        </div>
+
+
+        <div id="address">
             
         </div>
 
         <div id="link">
-            
-        </div>
 
-        <div id="address">
-            
         </div>
 
         <div id="image">
@@ -134,9 +135,6 @@
 
     </main>
 
-    <nav>
-        <p>Navigation pane</p>
-    </nav>
     
     <script>
         getData();

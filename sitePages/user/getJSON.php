@@ -65,9 +65,9 @@ function createConnection( ) {
 
 
 /* -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  - 
- * displayResult( ) - Execute a query and display the result
- *    Parameters:  $rs -  result set to display as 2D array
- *                 $sql - SQL string used to display an error msg
+ * displayResult( ) - Execute a query and user the result
+ *    Parameters:  $rs -  result set to user as 2D array
+ *                 $sql - SQL string used to user an error msg
  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  */
 function displayResult($result, $sql) {
    if ($result->num_rows > 0) {

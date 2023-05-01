@@ -74,7 +74,7 @@ abstract class Table
         $result = $conn->query($sql);
 
         if (!$result->num_rows > 0) {
-            return "No rows to display";
+            return "No rows to user";
         } else {
             $rows = $result->fetch_all(1);
             $fields = array_keys($rows[0]);
