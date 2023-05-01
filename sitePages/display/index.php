@@ -15,13 +15,12 @@
         function createConnection( ) {
             global $conn;
             // Create connection object
-            $conn = new mysqli(SERVER, USER, PASSWORD);
+            $conn = new mysqli(SERVER, USER, PASSWORD, "dbtravelminnesota");
             // Check connection
             if ($conn->connect_error) {
                 die("Connection failed: " . $conn->connect_error);
             } 
             // Select the database
-            $conn->select_db(DATABASE_NAME);
          } // end of createConnection( )
     ?>
     <script>
