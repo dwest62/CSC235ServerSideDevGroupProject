@@ -31,7 +31,7 @@ function getProcedures()
                     IN id int,
                     IN _destination_name varchar(50),
                     IN _destination_desc varchar(5000),
-                    IN _image_url varchar(50),
+                    IN _image_url varchar(300),
                     IN _website varchar(300),
                     IN _zip varchar(35),
                     IN _line_1 varchar(95),

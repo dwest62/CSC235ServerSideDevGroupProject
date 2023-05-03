@@ -316,8 +316,7 @@
                                 </select>
                                 <!-- Remove tag button -->
                                 <button name="btnSubmit[destinationTag]" value="remove" onclick="this.form.submit()">
-                                    Remove
-                                    tag
+                                    Remove tag
                                 </button>
                             </div>
                             <div class="destTagWrapper">
