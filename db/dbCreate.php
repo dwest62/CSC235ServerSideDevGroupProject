@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>Tourism Site</title>
     <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="../sitePages/style.css">
     <!-- dbfCreate.php - Creates new web tourism database and populates with data displaying log of the results.
                        - Database is populated using starter data in data.json.
         Contributors:
@@ -40,6 +41,9 @@
     ?>
 </head>
 <body>
+
+    <?php require_once "../sitePages/shared/header.html";?>
+
     <h1>Travel Minnesota: Create Database</h1>
     <?PHP if($dbh->databaseExists(DB_NAME)): ?>
     <p>

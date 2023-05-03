@@ -61,18 +61,7 @@
 </head>
 <body>
 
-<header>
-    <img id="logo" src="/groupProject/graphic/logo.png"/>
-    <nav>
-        <a href="/groupProject/index.php">Home</a>
-        <div class="divider"></div>
-        <a href="/groupProject/sitePages/readMe.php">Read Me</a>
-        <div class="divider"></div>
-        <a href="/groupProject/sitePages/admin.php">Admin</a>
-        <div class="divider"></div>
-        <a href="/groupProject/sitePages/showJSONData.php">Show JSON data</a>
-    </nav>
-</header>
+<?PHP include_once "shared/header.html"; ?>
 <h2>Team MN Destinations</h2>
 <p>By: James West & Dylan Johnson</p>
 <h1>Destinations</h1>

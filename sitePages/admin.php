@@ -13,6 +13,7 @@
         Revised: 4/25/23
     -->
     <?PHP
+    /** params.php provides server specific constants: SERVER, USER, PASSWORD */
     require_once "../../params.php";
     require_once "../db/component/Table.php";
     require_once "../db/component/DestinationTable.php";
@@ -24,8 +25,10 @@
     require_once "../db/component/TagTypeTable.php";
     require_once "../db/component/TagType.php";
 
+    const DATABASE_NAME = "dbtravelminnesota";
+
     // Global connection object
-    $dbh = new DBHandler(SERVER, USER, PASSWORD, "dbtravelminnesota");
+    $dbh = new DBHandler(SERVER, USER, PASSWORD, DATABASE_NAME);
 
     // Initialize table objects
     $destinationTable = new DestinationTable();

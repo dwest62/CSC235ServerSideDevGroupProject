@@ -18,15 +18,15 @@ body {
 h1, #bar {
     border: 1px;
     padding: 5px;
-    background: lightslategray;
-    color: aliceblue;
+    background: #2F95FA;
+    color: #E8FA37;
     text-align: center;
     font-size: 24px;
 }
 
 table {
     margin: 20px 0px;
-    border: 1px solid slategray;
+    border: 1px solid #2F95FA;
 
 }
 
@@ -43,12 +43,12 @@ td, th {
 }
 
 th {
-    background: darkgray;
-    color: aliceblue;
+    background: #2F95FA;
+    color: #E8FA37;
 }
 
-tr:nth-child(even) {
-    background: lightslategray;
+tr:nth-child(odd) {
+    background: rgb(124, 189, 255);
 }
 
 #table_details {

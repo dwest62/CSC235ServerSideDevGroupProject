@@ -18,13 +18,10 @@ if (isset($_POST['id'])) {
 
 /** params.php provides server specific constants: SERVER, USER, PASSWORD */
 require_once "../../params.php";
-/*
-// Using default username and password for AMPPS
-define("SERVER",   "localhost");
-define("USER", "root");
-define("PASSWORD",  "mysql");
-define("DATABASE_NAME", "touristwebapplicationdb");
-*/
+
+const DATABASE_NAME = "dbtravelminnesota";
+
+
 // Global connection object
 $conn = NULL;
 

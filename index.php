@@ -15,7 +15,10 @@
     <link rel="icon" type="image/x-icon" href="/groupProject/graphic/favicon.png">
     <?php
 
+    /** params.php provides server specific constants: SERVER, USER, PASSWORD */
     require_once "../params.php";
+
+    const DATABASE_NAME = "dbtravelminnesota";
 
     global $conn;
 
