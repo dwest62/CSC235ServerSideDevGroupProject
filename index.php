@@ -4,18 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Destinations</title>
-    <link rel="shortcut icon" type="image/x-icon" href="graphic/mn.png">
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="sitePages/style.css">
+    <link rel="icon" type="image/x-icon" href="/groupProject/graphic/favicon.png">
     <?php 
 
-        require_once "../../../params.php";
+        require_once "../params.php";
 
         global $conn;
 
         function createConnection( ) {
             global $conn;
             // Create connection object
-            $conn = new mysqli(SERVER, USER, PASSWORD, "dbtravelminnesota");
+            $conn = new mysqli(SERVER, USER, PASSWORD, DATABASE_NAME);
             // Check connection
             if ($conn->connect_error) {
                 die("Connection failed: " . $conn->connect_error);
@@ -35,7 +35,7 @@
                 
                 // Add AJAX call
                 // Request the API script using POST, calling the PHP script
-                httpReq.open("POST", "getJSON.php", true);
+                httpReq.open("POST", "json/getJSON.php", true);
                 httpReq.setRequestHeader("content-type", "application/x-www-form-urlencoded");
                 httpReq.onreadystatechange = function() {
                     if(httpReq.readyState == 4 && httpReq.status == 200) {
@@ -82,18 +82,7 @@
 </head>
 <body>
 
-<header>
-    <img id="logo" src="/groupProject/graphic/logo.png" />
-    <nav>
-        <a href="/groupProject/sitePages/user/index.php">Home</a>
-        <div class="divider"></div>
-        <a href="/groupProject/sitePages/readMe/readMe.html">Read Me</a>
-        <div class="divider"></div>
-        <a href="/groupProject/sitePages/admin/admin.php">Admin</a>
-        <div class="divider"></div>
-        <a href="/groupProject/sitePages/user/showJSONData.php">Show JSON data</a>
-    </nav>
-</header>
+<?PHP require_once "sitePages/shared/header.html";?>
     
     <main>
         <div id="dropdown">

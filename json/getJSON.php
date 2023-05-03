@@ -1,10 +1,9 @@
 <?php
-    /* jsonServer.php - Extract data from database and present as JSON data
-    *   Written by Student Name
-    *   Written:  Current Date
-    *   Revised:  
+    /* getJSON.php - Extract data from database and present as JSON data
+    *   Written by: James West and Dylan Johnson
+    *   Written:  4/28/23
+    *   Revised:  5/2/23
     *   Ref: https://www.developphp.com/video/JavaScript/JSON-Timed-Ajax-PHP-MySQL-Data-Request-Web-Application
-
    */
    // The JSON standard MIME header. Output as JSON, not HTML
    header('Content-type: application/json');
@@ -17,7 +16,7 @@
         $id = 2;
    }
     // Set up connection constants
-    require_once "../../../params.php";
+    require_once "../../params.php";
     /*
     // Using default username and password for AMPPS  
     define("SERVER",   "localhost");
@@ -65,9 +64,9 @@ function createConnection( ) {
 
 
 /* -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  - 
- * displayResult( ) - Execute a query and user the result
- *    Parameters:  $rs -  result set to user as 2D array
- *                 $sql - SQL string used to user an error msg
+ * displayResult( ) - Execute a query and json the result
+ *    Parameters:  $rs -  result set to json as 2D array
+ *                 $sql - SQL string used to json an error msg
  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  */
 function displayResult($result, $sql) {
    if ($result->num_rows > 0) {

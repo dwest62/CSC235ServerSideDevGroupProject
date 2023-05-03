@@ -1,10 +1,73 @@
 /**
-    style.css - Stylesheet for database creation output.
-    Written by: James West - westj4@csp.edu
+    style.css - default styling for Travel Minnesota pages
+    Contributors:
+        James West - westj4@csp.edu
+        Dylan Johnson - johnsond47@csp.edu
     Course: CSC235 Server-Side Development
     Assignment: Group Project
     Date: 4/21/2023
+    Revised: 5/1/2023
  */
+
+body {
+    margin: 50px;
+}
+
+h2 {
+    font-size: large;
+    text-decoration: underline;
+}
+
+p {
+    font-size: 16px;
+}
+
+img {
+    width: 200px;
+}
+
+.flxWrapper {
+    display: flex;
+    gap: 30px;
+}
+
+#logo {
+    display: block;
+    width: 300px;
+    height: 90px;
+    border-radius: 10px;
+    object-fit: cover;
+    object-position: center;
+    margin: auto;
+}
+
+nav {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+nav > a {
+    color: #2F95FA;
+}
+
+header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.divider {
+    margin: auto 0;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #E8FA37;
+    border: #2F95FA dashed 1px;
+}
 
 #frame {
     display: flex;
@@ -124,6 +187,7 @@ textarea {
     gap: 10px;
     align-items: end;
 }
+
 .frmGroup {
     display: flex;
     flex-direction: column;
@@ -144,56 +208,6 @@ h2 {
     text-decoration: underline;
 }
 
-p {
-    font-size: 16px;
-}
-
-img {
-    width: 200px;
-}
-
-.flxWrapper {
-    display: flex;
-    gap: 30px;
-}
-
-#logo {
-    display: block;
-    width: 300px;
-    height: 90px;
-    border-radius: 10px;
-    object-fit: cover;
-    object-position: center;
-    margin: auto;
-}
-
-nav {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    padding: 5px;
-    border-radius: 10px;
-}
-
-nav > a {
-    color: #2F95FA;
-}
-
-header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-}
-
-.divider {
-    margin: auto 0;
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: #E8FA37;
-    border: #2F95FA dashed 1px;
-}
 
 #feedback {
     display: block;

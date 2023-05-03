@@ -4,12 +4,13 @@
     <meta charset="utf-8"/>
     <title>Show Data</title>
     <!--
-            showJSONData.php
-            By: Dylan Johnson, James West
+            showJSONData.php - displays json data
+            Student Name: Dylan Johnson, James West
             Written: 4/30/2023
             Revised: 5/1/2023
     -->
     <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="icon" type="image/x-icon" href="/groupProject/graphic/favicon.png">
     <style>
         #databox {
             padding: 12px;
@@ -28,7 +29,7 @@
 
             // Add AJAX call
             // Request the API script using POST, calling the PHP script
-            httpReq.open("POST", "getJSONData.php", true);
+            httpReq.open("POST", "../json/getJSONData.php", true);
             httpReq.setRequestHeader("content-type", "application/x-www-form-urlencoded");
             httpReq.onreadystatechange = function () {
                 if (httpReq.readyState == 4 && httpReq.status == 200) {
@@ -63,18 +64,17 @@
 <header>
     <img id="logo" src="/groupProject/graphic/logo.png"/>
     <nav>
-        <a href="/groupProject/sitePages/user/index.php">Home</a>
+        <a href="/groupProject/index.php">Home</a>
         <div class="divider"></div>
-        <a href="/groupProject/sitePages/readMe/readMe.html">Read Me</a>
+        <a href="/groupProject/sitePages/readMe.php">Read Me</a>
         <div class="divider"></div>
-        <a href="/groupProject/sitePages/admin/admin.php">Admin</a>
+        <a href="/groupProject/sitePages/admin.php">Admin</a>
         <div class="divider"></div>
-        <a href="/groupProject/sitePages/user/showJSONData.php">Show JSON data</a>
+        <a href="/groupProject/sitePages/showJSONData.php">Show JSON data</a>
     </nav>
 </header>
 <h2>Team MN Destinations</h2>
 <p>By: James West & Dylan Johnson</p>
-<a href="serverSideDev/groupProject/sitePages/display">Home Page</a>
 <h1>Destinations</h1>
 <div id="databox"></div>
 <script>

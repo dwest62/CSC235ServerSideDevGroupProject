@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>Administration Page</title>
     <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="icon" type="image/x-icon" href="/groupProject/graphic/favicon.png">
 
     <!--
         admin.php - Web application consisting of forms used to add, delete, update, and view dbtravelminnesota tables.
@@ -12,16 +13,16 @@
         Revised: 4/25/23
     -->
     <?PHP
-    require_once "../../../params.php";
-    require_once "../../db/component/Table.php";
-    require_once "../../db/component/DestinationTable.php";
-    require_once "../../db/component/Destination.php";
-    require_once "../../db/component/DBHandler.php";
-    require_once "../../db/component/DestinationTagTable.php";
-    require_once "../../db/component/Tag.php";
-    require_once "../../db/component/TagTable.php";
-    require_once "../../db/component/TagTypeTable.php";
-    require_once "../../db/component/TagType.php";
+    require_once "../../params.php";
+    require_once "../db/component/Table.php";
+    require_once "../db/component/DestinationTable.php";
+    require_once "../db/component/Destination.php";
+    require_once "../db/component/DBHandler.php";
+    require_once "../db/component/DestinationTagTable.php";
+    require_once "../db/component/Tag.php";
+    require_once "../db/component/TagTable.php";
+    require_once "../db/component/TagTypeTable.php";
+    require_once "../db/component/TagType.php";
 
     // Global connection object
     $dbh = new DBHandler(SERVER, USER, PASSWORD, "dbtravelminnesota");
@@ -166,18 +167,7 @@
     </script>
 </head>
 <body>
-<header>
-    <img id="logo" src="/groupProject/graphic/logo.png"/>
-    <nav>
-        <a href="/groupProject/sitePages/user/index.php">Home</a>
-        <div class="divider"></div>
-        <a href="/groupProject/sitePages/readMe/readMe.html">Read Me</a>
-        <div class="divider"></div>
-        <a href="/groupProject/sitePages/admin/admin.php">Admin</a>
-        <div class="divider"></div>
-        <a href="/groupProject/sitePages/user/showJSONData.php">Show JSON data</a>
-    </nav>
-</header>
+<?PHP require_once "shared/header.html";?>
 <main>
     <!-- Feedback for form operations -->
     <div id="feedback">
