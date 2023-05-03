@@ -5,6 +5,7 @@
     <title>Tourism Site</title>
     <link rel="stylesheet" type="text/css" href="style.css">
     <!-- dbfCreate.php - Creates new web tourism database and populates with data displaying log of the results.
+                       - Database is populated using starter data in data.json.
         Contributors:
             James West - westj4@csp.edu
             Dylan Johnson - johnsond47@csp.edu
@@ -23,7 +24,7 @@
         include_once "component/TagTypeTable.php";
         require_once "component/dbProcedure.php";
 
-        /** param.php provides server specific constants: SERVER, USER, PASSWORD */
+        /** params.php provides server specific constants: SERVER, USER, PASSWORD */
         require_once "../../params.php";
 
         const DB_NAME = "dbtravelminnesota";

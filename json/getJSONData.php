@@ -2,7 +2,7 @@
 /*
 * getJSON.php - Extract data from database and present as JSON data
 *   Written by: James West and Dylan Johnson
-*   Written:  4/28/23
+*   Written:  4/30/23
 *   Revised:  5/2/23
 *  Ref: https://www.developphp.com/video/JavaScript/JSON-Timed-Ajax-PHP-MySQL-Data-Request-Web-Application
 */
@@ -17,7 +17,7 @@ if (isset($_POST['limit'])) {
 } else {
     $limit = 2;
 }
-// Set up connection constants
+/** params.php provides server specific constants: SERVER, USER, PASSWORD */
 require_once "../../params.php";
 /*
 // Using default username and password for AMPPS
